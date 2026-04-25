@@ -1,0 +1,5 @@
+*.md text eol=lf
+*.msg text eol=lf
+*.flow text eol=lf
+*.txt text eol=lf
+*.json text eol=lf

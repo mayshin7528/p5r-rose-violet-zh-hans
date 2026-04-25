@@ -1,0 +1,200 @@
+import( "FHIT_009_002_00.msg" );
+
+void MAIN_sentou_hook()
+{
+    int var7;
+    int var8;
+    int var6;
+    var7 = ADD_PC_MONEY( 0 );
+    var8 = 500;
+    BIT_ON( 5139 );
+    
+    if ( BIT_CHK( 96 ) == 1 )
+    {
+        SUB_KFEVT_Alley_SENTOU();
+        return;
+    }
+
+    
+    if ( BIT_CHK( 1039 ) == 1 )
+    {
+        
+        if ( BIT_CHK( 4202 ) )
+        {
+            MSG_WND_DSP();
+            MSG( MSG_LAST_GREETING_sentou );
+            MSG_WND_CLS();
+        }
+        else 
+        {
+            MSG_WND_DSP();
+            MSG( MSG_LAST_GREETING_sentou_2 );
+            MSG_WND_CLS();
+        }
+
+        return;
+    }
+
+    
+    if ( BIT_CHK( 2116 ) == 1 )
+    {
+        MSG_WND_DSP();
+        MSG( MSG_LastKeyfree );
+        MSG_WND_CLS();
+        return;
+    }
+
+    
+    if ( BIT_CHK( 1008 ) == 1 )
+    {
+        MSG_WND_DSP();
+        MSG_MIND( MND_0103to0108_Error_Not_2, 0 );
+        MSG_WND_CLS();
+        return;
+    }
+
+    
+    if ( BIT_CHK( 4172 ) == 0 )
+    {
+        MSG_WND_DSP();
+        
+        if ( BIT_CHK( 66 ) == 1 )
+        {
+            MSG( MSG_SENTOU_NG_TERM_MORU );
+        }
+        else 
+        {
+            MSG_MIND( MSG_SENTOU_NG_TERM, 0 );
+        }
+
+        MSG_WND_CLS();
+        return;
+    }
+
+    
+    if ( ( BIT_CHK( 755 ) == 0 ) && ( BIT_CHK( 1195 ) == 1 ) )
+    {
+        MSG_SYSTEM( MSG_SYSTEM_SHORTCUT_Sent );
+        BIT_ON( 755 );
+    }
+
+    
+    if ( GET_TIME() <= 4 )
+    {
+        
+        if ( BIT_CHK( 1195 ) == 0 )
+        {
+            MSG_WND_DSP();
+            MSG( MSG_Sentou_UseNG_HIRU_an );
+            MSG_WND_CLS();
+        }
+        else 
+        {
+            MSG_WND_DSP();
+            MSG( MSG_Sentou_UseNG_HIRU );
+            MSG_WND_CLS();
+        }
+
+        return;
+    }
+
+    
+    if ( BIT_CHK( 4252 ) == 0 )
+    {
+        MSG_WND_DSP();
+        MSG( MSG_SENTOU_START_1ST );
+        MSG_WND_CLS();
+        CALL_TUTORIAL( 2, 27 );
+    }
+
+    MSG_WND_DSP();
+    MSG( MSG_Sentou_ParamInfo_int );
+    MSG_WND_CLS();
+    
+    if ( BIT_CHK( 4252 ) == 0 )
+    {
+        MSG_WND_DSP();
+        
+        if ( GET_DAYOFWEEK() == 0 )
+        {
+            MSG( MSG_Sentou_Kusuri_1st );
+        }
+        else if ( ( GET_WEATHER() == 1 ) || ( GET_WEATHER() == 3 ) )
+        {
+            MSG( MSG_Sentou_Hot_1st );
+        }
+
+        MSG_WND_CLS();
+    }
+    else 
+    {
+        MSG_WND_DSP();
+        
+        if ( GET_DAYOFWEEK() == 0 )
+        {
+            MSG( MSG_SENTOU_START_DrugDay );
+        }
+        else if ( ( GET_WEATHER() == 1 ) || ( GET_WEATHER() == 3 ) )
+        {
+            MSG( MSG_SENTOU_START_HotDay );
+        }
+
+        MSG_WND_CLS();
+    }
+
+    
+    if ( GET_PC_PARAM_LV( 1, 1 ) == 5 )
+    {
+        MSG_WND_DSP();
+        MSG_MIND( MND_Sentou_ParamEndInfo, 0 );
+        MSG_WND_CLS();
+    }
+
+    CALL_GLOBAL_MONEY_PANEL();
+    MSG_WND_DSP();
+    MSG( MSG_SENTOU_START_COMMON );
+    SEL_DEFKEY( 14, 1 );
+    var6 = SEL( SEL_SENTOU_Q );
+    MSG_WND_CLS();
+    BIT_ON( 4252 );
+    
+    if ( var6 == 0 )
+    {
+        
+        if ( var7 >= var8 )
+        {
+            CHANGE_GLOBAL_MONEY( ( -1 * var8 ), 0 );
+            DEL_GLOBAL_MONEY_PANEL();
+            MSG_WND_DSP();
+            MSG( MSG_SENTOU_ESCAPE );
+            MSG_WND_CLS();
+            Fld_FadeOut_CallEvent();
+            CALL_EVENT( 761, 101 );
+            BIT_ON( 4202 );
+            
+            if ( ( GET_TIME() == 3 ) || ( GET_TIME() == 4 ) )
+            {
+                NET_SET_AFTER_SCHOOL_ACTION( 0x40 );
+            }
+            else if ( GET_TIME() == 5 )
+            {
+                NET_SET_NIGHT_ACTION( 0x40 );
+            }
+
+            SUB_MGK_CALL_CALENDAR();
+        }
+        else 
+        {
+            DEL_GLOBAL_MONEY_PANEL();
+            MSG_WND_DSP();
+            MSG( MSG_Sentou_NoMoney );
+            MSG_WND_CLS();
+        }
+
+    }
+    else 
+    {
+        DEL_GLOBAL_MONEY_PANEL();
+    }
+
+}
