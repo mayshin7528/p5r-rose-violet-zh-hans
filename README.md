@@ -1,51 +1,81 @@
-# P5R Rose & Violet 简中汉化协作仓库
+# P5R Rose & Violet 简体中文补丁
 
-这是 `Rose & Violet v1.0.10` 的简体中文汉化协作仓库，用来同步进度记录、术语表、文案记录和已经完成的可编辑源稿。
+本仓库同时包含可安装补丁、最终译文数据和翻译管理器。仓库根目录就是 Reloaded-II Mod 目录结构，不需要从 `build` 中寻找成品。
 
-## 协作规则
+## 目录
 
-- 仓库保持私有，不公开发布原 Mod 或游戏资源。
-- `Rose` 和怪盗代号保留英文；角色本名翻译为中文。
-- `Inari` 译为“小狐狸”，`Lady Ann` 译为“杏大人”。
-- 按文件顺序推进，不按剧情顺序强制推进。
-- 每批完成后至少执行：编译、同步已安装模组、清缓存、看日志。
-- 没有对应存档时，文案记录标为 `已部署待实测`。
-- 新游戏开场赌场作为固定加载烟测点。
+| 路径 | 内容 |
+| --- | --- |
+| `ModConfig.json` | Reloaded-II Mod 元数据 |
+| `P5REssentials/` | 已编译的 CPK 覆盖文件与部分 MSG 源文本 |
+| `FEmulator/` | FEmulator 文本覆盖 |
+| `Characters/` | 原 Mod 同路径的角色相关覆盖 |
+| `translations/catalog/*.csv.gz` | 管理器只读基础数据：官方中文、Mod 英文、当前基础中文 |
+| `translations/overrides.csv` | 人工修改后的最终译文，今后编辑以此文件为准 |
+| `translations/resource_status.json` | 每个资源最近一次构建状态 |
+| `tools/translation-manager/` | 本地翻译管理器 |
+| `scripts/` | 构建、部署和译文目录维护脚本 |
+| `references/` | BF 回编所需的少量流程修复和官方名称表 |
 
-## 主要文件
+## 安装
 
-- `汉化计划书.md`
-- `汉化进度记录.md`
-- `对话框与右上气泡汉化接手指南.md`
-- `名字和称呼统一表.md`
-- `中文文案记录/README.md`
-- `中文文案记录/索引.md`
+将整个仓库目录放到：
 
-## 日常流程
-
-1. 开始前先拉最新：
-
-```powershell
-git pull
+```text
+Reloaded-II/Mods/p5rpc.kasumi.roseandviolet.zh-hans
 ```
 
-2. 做一个自己的分支：
+并在 Reloaded-II 中同时启用原版 Rose & Violet Mod 与本汉化补丁。
 
-```powershell
-git switch -c your-name/e113-001
+## 强制中文姓名
+
+本补丁 0.2.0 起自带“强制主角姓名为‘芳泽霞’”开关，默认开启。它只改变游戏读取姓名时的显示结果，不会改写存档中的姓名。
+
+在 Reloaded-II 中打开本汉化补丁的“配置”即可切换。开启后各类姓名调用分别为：
+
+- 名：霞
+- 姓：芳泽
+- 全名：芳泽霞（中文顺序，无空格）
+
+请停用独立的 `Force (Custom) Protagonist Name` Mod，否则两个 Mod 会同时 hook 相同函数，显示结果取决于加载顺序。
+
+## 翻译管理器
+
+双击 `start_translation_manager.cmd`，浏览器会打开 `http://127.0.0.1:4178/`。
+
+管理器可以搜索、筛选、编辑译文，并按资源编译和部署。编辑内容写入 `translations/overrides.csv`，不会修改压缩基础目录。
+
+## 本机依赖
+
+默认路径与当前开发环境一致：
+
+```text
+原英文 Mod: F:\Reloaded-II\Mods\p5rpc.kasumi.roseandviolet
+测试汉化 Mod: F:\Reloaded-II\Mods\p5rpc.kasumi.roseandviolet.zh-hans
+反编译参考: F:\Rose\references\violet_mod_decompiled
+编译器: F:\Rose\AtlusScriptTools\AtlusScriptCompiler.exe
+编码表: F:\Rose\AtlusScriptTools\Charsets\P5R_CHS_ROSE.tsv
 ```
 
-3. 完成一批后加入文案记录和源稿。普通文档直接 add；位于被忽略资源目录里的源稿要用 `-f`：
+可以通过环境变量覆盖：`ROSE_ORIGINAL_MOD`、`ROSE_INSTALLED_MOD`、`ROSE_REFERENCE_MOD`、`ROSE_COMPILER`、`ROSE_CACHE`。
+
+## 全量构建与部署
 
 ```powershell
-git add 汉化进度记录.md 名字和称呼统一表.md 中文文案记录
-git add -f "P5REssentials/CPK/EN.CPK/EVENT_DATA/MESSAGE/E100/E113_001.BMD.msg"
-git commit -m "汉化 E113_001"
-git push -u origin your-name/e113-001
+node --max-old-space-size=8192 scripts/build_translation_patch.js --build
+node scripts/prepare_release_tree.js
+node scripts/deploy_translation_build.js
+node scripts/mark_deployed_overrides.js
 ```
 
-4. 在 GitHub 上开 Pull Request，让另一个人确认术语、编译记录和状态后合并。
+构建目录 `build/` 是临时目录，不进入 Git。部署脚本只覆盖原英文 Mod 中存在同路径的文件。
 
-## 不进仓库的内容
+## 当前状态
 
-`.BMD`、`.BF`、`.TBL`、工具、备份目录、缓存、DLL、贴图和音频等默认不提交。需要交付编译成品时，先在本地同步到已安装模组；GitHub 仓库主要负责协作和审稿。
+- 文本记录：187753 条
+- 资源：3799 个
+- 最近一次成功编译：3433 个资源，失败 0
+- 仍含整句英文而跳过：363 个资源，其中主 Mod 72 个
+- 已编译成品已经合并到仓库根部 Mod 目录
+
+详细记录见 `docs/最终编译部署报告_20260807.md`。

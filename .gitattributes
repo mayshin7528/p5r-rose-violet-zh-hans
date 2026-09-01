@@ -1,5 +1,3 @@
-*.md text eol=lf
-*.msg text eol=lf
-*.flow text eol=lf
-*.txt text eol=lf
-*.json text eol=lf
+# Release assets must retain the exact bytes produced by the build and deployment.
+* -text
+README.md text eol=lf
