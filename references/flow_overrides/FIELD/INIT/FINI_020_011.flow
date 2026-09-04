@@ -1,0 +1,690 @@
+
+// 
+// FlowScript decompiled using Atlus Script Tools
+// 
+
+
+// 
+// Imports
+// 
+
+import("FINI_020_011.BF.msg");
+
+// 
+// Script-level variable definitions
+// 
+
+int sVar0;
+int sVar1;
+int sVar2;
+int sVar3;
+
+// 
+// Procedure declarations
+// 
+
+// Procedure Index: 0
+void f020_011_init()
+{
+    int var4;
+    var4 = 0;
+    var4 = FLD_GET_SCRIPT_TIMING();
+    
+    if (!(var4 == 1))
+    {
+        goto IfElseLabel_0;
+    }
+
+    return;
+    goto IfEndLabel_1;
+    IfElseLabel_0:
+    
+    if (!(var4 == 2))
+    {
+        goto IfElseLabel_2;
+    }
+
+    return;
+    goto IfEndLabel_3;
+    IfElseLabel_2:
+    
+    if (!(var4 == 3))
+    {
+        goto IfElseLabel_4;
+    }
+
+    SUB_CameraShakeOff();
+    SUB_YUSUKE_SYNC();
+    return;
+    goto IfEndLabel_5;
+    IfElseLabel_4:
+    
+    if (!(var4 == 4))
+    {
+        goto IfEndLabel_6;
+    }
+
+    
+    if (!(BIT_CHK(1008) == 1))
+    {
+        goto IfEndLabel_7;
+    }
+
+    FLD_START_FADE_DISABLE();
+    MAIN_MUSEUM_0103_0108();
+    goto IfEndLabel_7;
+    IfEndLabel_7:
+    
+    if (!(BIT_CHK(1039) == 1))
+    {
+        goto IfEndLabel_8;
+    }
+
+    FLD_START_FADE_DISABLE();
+    MAIN_GREETING_TIME();
+    goto IfEndLabel_8;
+    IfEndLabel_8:
+    return;
+    goto IfEndLabel_6;
+    IfEndLabel_6:
+    goto IfEndLabel_5;
+    IfEndLabel_5:
+    goto IfEndLabel_3;
+    IfEndLabel_3:
+    goto IfEndLabel_1;
+    IfEndLabel_1:
+}
+
+
+// Procedure Index: 1
+void SUB_CameraShakeOff()
+{
+    
+    if (!((BIT_CHK(1008) == 1) || (CHK_DAYS(3, 19) == 1)))
+    {
+        goto IfEndLabel_9;
+    }
+
+    FLD_CAMERA_LOCK();
+    CAMERA_SHAKE_STOP();
+    goto IfEndLabel_9;
+    IfEndLabel_9:
+}
+
+
+// Procedure Index: 2
+void MAIN_MUSEUM_0103_0108()
+{
+    int var5;
+    int var6;
+    FLD_SPOT_FLAG_SET(1);
+    SEL_DEFKEY(14, 1);
+    BIT_ON(107);
+    var5 = 0;
+    
+    if (!((BIT_CHK(1011) == 0) && (BIT_CHK(1017) == 0)))
+    {
+        goto IfElseLabel_14;
+    }
+
+    EVT_FAST_PROC_START();
+    MSG_WND_DSP();
+    MSG_MIND(MND_EVENT_YUSUKE_000_00, 0);
+    _12_10:
+    
+    if (!1)
+    {
+        goto IfEndLabel_16;
+    }
+
+    
+    if (!(var5 == 1))
+    {
+        goto IfEndLabel_17;
+    }
+
+    EVT_FAST_PROC_START();
+    goto IfEndLabel_17;
+    IfEndLabel_17:
+    MSG_MIND(MND_EVENT_YUSUKE_001_00, 0);
+    var6 = SEL(SEL_EVENT_YUSUKE_001_00);
+    MSG_WND_CLS();
+    
+    if (!(var6 == 0))
+    {
+        goto IfElseLabel_18;
+    }
+
+    BIT_ON(1011);
+    NET_SET_AFTER_SCHOOL_ACTION(205);
+    BIT_ON(1248);
+    SET_COUNT(353, (GET_COUNT(353) + 1));
+    SET_COUNT(287, 5);
+    EVT_FAST_PROC_END();
+    Fld_FadeOut_CallEvent();
+    CALL_EVENT(511, 280);
+    Fld_FadeOut_CallCalendar();
+    CALL_CALENDAR();
+    goto _13_11;
+    goto IfEndLabel_19;
+    IfElseLabel_18:
+    EVT_FAST_PROC_END();
+    var5 = 1;
+    CALL_LMAP(38);
+    FLD_PANEL_MAP_PROC_SYNC(0);
+    
+    if (!(FLD_LOCAL_FLAG_CHK((49152 + 2)) == 1))
+    {
+        goto IfElseLabel_20;
+    }
+
+    FLD_LOCAL_FLAG_OFF((49152 + 2));
+    MSG_WND_DSP();
+    goto IfEndLabel_21;
+    IfElseLabel_20:
+    BIT_ON(107);
+    FLD_SPOT_FLAG_SET(0);
+    goto _13_11;
+    goto IfEndLabel_21;
+    IfEndLabel_21:
+    goto IfEndLabel_19;
+    IfEndLabel_19:
+    goto _12_10;
+    goto IfEndLabel_16;
+    _13_11:
+    IfEndLabel_16:
+    return;
+    goto IfEndLabel_15;
+    _20_12:
+    IfElseLabel_14:
+    
+    if (!1)
+    {
+        goto IfEndLabel_22;
+    }
+
+    EVT_FAST_PROC_START();
+    MSG_WND_DSP();
+    MSG_MIND(MND_EVENT_NEXT_000_00, 0);
+    MSG_WND_CLS();
+    EVT_FAST_PROC_END();
+    CALL_LMAP(38);
+    FLD_PANEL_MAP_PROC_SYNC(0);
+    
+    if (!(FLD_LOCAL_FLAG_CHK((49152 + 2)) == 1))
+    {
+        goto IfElseLabel_23;
+    }
+
+    FLD_LOCAL_FLAG_OFF((49152 + 2));
+    MSG_WND_DSP();
+    goto IfEndLabel_24;
+    IfElseLabel_23:
+    BIT_ON(107);
+    FLD_SPOT_FLAG_SET(0);
+    goto _21_13;
+    goto IfEndLabel_24;
+    IfEndLabel_24:
+    goto _20_12;
+    goto IfEndLabel_22;
+    _21_13:
+    IfEndLabel_22:
+    return;
+    goto IfEndLabel_15;
+    IfEndLabel_15:
+}
+
+
+// Procedure Index: 3
+void SUB_YUSUKE_SYNC()
+{
+    int var7;
+    
+    if (!((BIT_CHK(1008) == 1) && (BIT_CHK(1011) == 0)))
+    {
+        goto IfEndLabel_25;
+    }
+
+    FLD_NPC_FBN_SYNC(880);
+    var7 = FLD_NPCID_SEARCH_RESHND2(500, 880);
+    FLD_MODEL_SYNC_VISIBLE(var7);
+    goto IfEndLabel_25;
+    IfEndLabel_25:
+    
+    if (!(BIT_CHK(1039) == 1))
+    {
+        goto IfEndLabel_26;
+    }
+
+    
+    if (!(BIT_CHK(3156) == 1))
+    {
+        goto IfEndLabel_27;
+    }
+
+    sVar0 = FLD_NPC_TBLID_LOAD(5461);
+    FLD_MODEL_LOADSYNC(sVar0);
+    FLD_MODEL_SET_NPC_POS(sVar0, 900);
+    MDL_VISIBLE(sVar0, 1);
+    FLD_MODEL_SYNC_VISIBLE(sVar0);
+    goto IfEndLabel_27;
+    IfEndLabel_27:
+    goto IfEndLabel_26;
+    IfEndLabel_26:
+}
+
+
+// Procedure Index: 4
+void MAIN_GREETING_TIME()
+{
+    int var8;
+    int var9;
+    var8 = 0;
+    
+    if (!(BIT_CHK(1039) == 0))
+    {
+        goto IfEndLabel_30;
+    }
+
+    return;
+    goto IfEndLabel_30;
+    IfEndLabel_30:
+    EVT_FAST_PROC_START();
+    FADEIN(0, 10);
+    FADE_SYNC();
+    _34_28:
+    
+    if (!1)
+    {
+        goto IfEndLabel_31;
+    }
+
+    
+    if (!(var8 == 1))
+    {
+        goto IfEndLabel_32;
+    }
+
+    EVT_FAST_PROC_START();
+    goto IfEndLabel_32;
+    IfEndLabel_32:
+    
+    if (!(BIT_CHK(3156) == 1))
+    {
+        goto IfElseLabel_33;
+    }
+
+    sVar0 = FLD_NPCID_SEARCH_RESHND(5461);
+    
+    if (!(BIT_CHK(5378) == 1))
+    {
+        goto IfElseLabel_35;
+    }
+
+    FLD_MODEL_TALK_ANIM(sVar0);
+    MSG_WND_DSP();
+    MSG(MSG_KAWANABE_END, 0);
+    MSG_WND_CLS();
+    MSG_WND_DSP();
+    MSG(MSG_KAWANABE_010_5_0, 0);
+    MSG_WND_CLS();
+    goto IfEndLabel_36;
+    IfElseLabel_35:
+    FLD_MODEL_TALK_ANIM(sVar0);
+    MSG_WND_DSP();
+    MSG(MSG_KAWANABE_001_0_0, 0);
+    var9 = SEL(SEL_KAWANABE_002_0_0);
+    MSG_WND_CLS();
+    FLD_MODEL_TALK_ANIM(sVar0);
+    MSG_WND_DSP();
+    
+    if (!(var9 == 0))
+    {
+        goto IfElseLabel_37;
+    }
+
+    MSG(MSG_KAWANABE_003_0_0, 0);
+    goto IfEndLabel_38;
+    IfElseLabel_37:
+    MSG(MSG_KAWANABE_003_1_0, 0);
+    goto IfEndLabel_38;
+    IfEndLabel_38:
+    MSG_WND_CLS();
+    FLD_MODEL_TALK_ANIM(sVar0);
+    MSG_WND_DSP();
+    MSG(MSG_KAWANABE_004_0_0, 0);
+    MSG_WND_CLS();
+    MSG_WND_DSP();
+    MSG_MIND(MND_KAWANABE_010_0_0, 0);
+    MSG_WND_CLS();
+    BIT_ON(5378);
+    goto IfEndLabel_36;
+    IfEndLabel_36:
+    goto IfEndLabel_34;
+    IfElseLabel_33:
+    MSG_WND_DSP();
+    MSG_MIND(MND_EVENT_NEXT_000_00, 0);
+    MSG_WND_CLS();
+    goto IfEndLabel_34;
+    IfEndLabel_34:
+    EVT_FAST_PROC_END();
+    
+    if (!(((BIT_CHK(3158) == 1) || (BIT_CHK(3176) == 1)) && (BIT_CHK(3156) == 1)))
+    {
+        goto IfElseLabel_39;
+    }
+
+    CALL_LMAP(50);
+    goto IfEndLabel_40;
+    IfElseLabel_39:
+    
+    if (!((BIT_CHK(3158) == 1) || (BIT_CHK(3176) == 1)))
+    {
+        goto IfElseLabel_41;
+    }
+
+    CALL_LMAP(51);
+    goto IfEndLabel_42;
+    IfElseLabel_41:
+    
+    if (!(BIT_CHK(3156) == 1))
+    {
+        goto IfElseLabel_43;
+    }
+
+    CALL_LMAP(52);
+    goto IfEndLabel_44;
+    IfElseLabel_43:
+    CALL_LMAP(65);
+    goto IfEndLabel_44;
+    IfEndLabel_44:
+    goto IfEndLabel_42;
+    IfEndLabel_42:
+    goto IfEndLabel_40;
+    IfEndLabel_40:
+    FLD_PANEL_MAP_PROC_SYNC(0);
+    
+    if (!(FLD_LOCAL_FLAG_CHK((49152 + 2)) == 1))
+    {
+        goto IfElseLabel_45;
+    }
+
+    FLD_LOCAL_FLAG_OFF((49152 + 2));
+    var8 = 1;
+    goto IfEndLabel_46;
+    IfElseLabel_45:
+    FLD_SPOT_FLAG_SET(0);
+    goto _35_29;
+    goto IfEndLabel_46;
+    IfEndLabel_46:
+    goto _34_28;
+    goto IfEndLabel_31;
+    _35_29:
+    IfEndLabel_31:
+}
+
+
+// Procedure Index: 5
+void Fld_FadeOut_CallField()
+{
+    FADEOUT(27, 10);
+    FADE_SYNC();
+}
+
+
+// Procedure Index: 6
+void Fld_FadeOut_Crowd()
+{
+    FLD_REQ_SCN_CHANGE(0);
+}
+
+
+// Procedure Index: 7
+void Fld_FadeOut_CallEvent()
+{
+    FADEOUT(15, 10);
+    FADE_SYNC();
+}
+
+
+// Procedure Index: 8
+void Fld_FadeOut_CallCalendar()
+{
+    FADEOUT(15, 10);
+    FADE_SYNC();
+}
+
+
+// Procedure Index: 9
+void Fld_FadeOut_Default()
+{
+    FADEOUT(0, 10);
+    FADE_SYNC();
+}
+
+
+// Procedure Index: 10
+void Fld_FadeOut_Wait10()
+{
+    FADEOUT(0, 10);
+    FADE_SYNC();
+    WAIT(10);
+}
+
+
+// Procedure Index: 11
+void Fld_FadeIn_Default()
+{
+    FADEIN(0, 20);
+    FADE_SYNC();
+}
+
+
+// Procedure Index: 12
+void Fld_FadeOut_Subway()
+{
+    FADEOUT(8, 10);
+    FADE_SYNC();
+}
+
+
+// Procedure Index: 13
+void Fld_FadeOut_Symbol()
+{
+    FADEOUT(15, 10);
+    FADE_SYNC();
+}
+
+
+// Procedure Index: 14
+void Fld_FadeOut_Rain()
+{
+    FADEOUT(11, 10);
+    FADE_SYNC();
+}
+
+
+// Procedure Index: 15
+void Fld_FadeOut_Cross()
+{
+    FADEOUT(13, 10);
+    FADE_SYNC();
+}
+
+
+// Procedure Index: 16
+void Fld_FadeOut_Parallel()
+{
+    FADEOUT(14, 10);
+    FADE_SYNC();
+}
+
+
+// Procedure Index: 17
+void Fld_FadeOut_CutChange()
+{
+    FADEOUT(5, 10);
+    FADE_SYNC();
+}
+
+
+// Procedure Index: 18
+void Fld_FadeOut_Velvet()
+{
+    FADEOUT(19, 10);
+    FADE_SYNC();
+}
+
+
+// Procedure Index: 19
+void SUB_PhoneRing()
+{
+    int var10;
+    var10 = FLD_PC_GET_RESHND(0);
+    MDL_ICON(var10, 15);
+    FLD_COMSE_PLAY(1048);
+    WAIT(10);
+    RUMBLE_START_S(6, 12, 2, 30);
+    WAIT(30);
+}
+
+
+// Procedure Index: 20
+void SUB_PhoneRumble()
+{
+    int var11;
+    var11 = FLD_PC_GET_RESHND(0);
+    MDL_ICON(var11, 18);
+    FLD_COMSE_PLAY(1047);
+    WAIT(10);
+    RUMBLE_START_S(6, 12, 2, 30);
+    WAIT(30);
+}
+
+
+// Procedure Index: 21
+void SUB_PhonePickup()
+{
+    sVar1 = 0;
+    FLD_SET_CELLPHONE(1);
+    WAIT(15);
+    sVar1 = 1;
+}
+
+
+// Procedure Index: 22
+void SUB_PhoneCall()
+{
+    sVar2 = FLD_PC_GET_RESHND(0);
+    
+    if (!(FLD_UMBREALLA_CHECK_USE() == 1))
+    {
+        goto IfElseLabel_47;
+    }
+
+    sVar3 = FLD_MODEL_ADDMOTION_LOAD(sVar2, 101);
+    goto IfEndLabel_48;
+    IfElseLabel_47:
+    sVar3 = FLD_MODEL_ADDMOTION_LOAD(sVar2, 1);
+    goto IfEndLabel_48;
+    IfEndLabel_48:
+    FLD_MODEL_LOADSYNC(sVar3);
+    FLD_MODEL_COPY_POSE_ANIM(sVar3, sVar2);
+    FLD_MODEL_SET_VISIBLE(sVar2, 0, 0);
+    FLD_MODEL_SET_VISIBLE(sVar3, 1, 0);
+    FLD_CELLPHONE_MODEL_VISIBLE(sVar3, 1);
+    MDL_ANIM(sVar3, (60 + 0), 0, 5, 1.00f);
+    MDL_ANIM_NEXT(sVar3, (60 + 1), 1, 0, 1.00f);
+    sVar1 = 2;
+    WAIT(30);
+}
+
+
+// Procedure Index: 23
+void SUB_PhoneTalk()
+{
+    SUB_PhonePickup();
+    SUB_PhoneCall();
+}
+
+
+// Procedure Index: 24
+void SUB_PhoneEnd()
+{
+    
+    if (!(sVar1 == 0))
+    {
+        goto IfEndLabel_49;
+    }
+
+    return;
+    goto IfEndLabel_49;
+    IfEndLabel_49:
+    
+    if (!(sVar1 != 2))
+    {
+        goto IfElseLabel_50;
+    }
+
+    FLD_SET_CELLPHONE(0);
+    goto IfEndLabel_51;
+    IfElseLabel_50:
+    FLD_MODEL_SET_VISIBLE(sVar2, 0, 0);
+    FLD_MODEL_SET_VISIBLE(sVar3, 1, 0);
+    MDL_ANIM(sVar3, (60 + 2), 0, 10, 1.00f);
+    WAIT(65);
+    FLD_CELLPHONE_MODEL_VISIBLE(sVar3, 0);
+    MDL_ANIM_SYNC(sVar3);
+    MDL_ANIM(sVar3, 0, 1, 0, 1.00f);
+    MDL_ANIM_BLENDSYNC(sVar3);
+    FLD_MODEL_COPY_POSE_ANIM(sVar2, sVar3);
+    FLD_MODEL_SET_VISIBLE(sVar2, 1, 0);
+    FLD_MODEL_SET_VISIBLE(sVar3, 0, 0);
+    FLD_MODEL_FREE(sVar3);
+    FLD_SET_CELLPHONE(0);
+    goto IfEndLabel_51;
+    IfEndLabel_51:
+    sVar1 = 0;
+}
+
+
+// Procedure Index: 25
+void SUB_MoruShowFace()
+{
+    int var12;
+    int var13;
+    
+    if (!(FLD_CHECK_MORGANA_BAG() == 1))
+    {
+        goto IfEndLabel_52;
+    }
+
+    var12 = FLD_PC_GET_CURRENT_RESHND(0);
+    var13 = MDL_GET_ITEM_RESHND(var12, 2);
+    MDL_ANIM(var13, 50, 0, 0, 1.00f);
+    MDL_ANIM_NEXT(var13, 51, 1, 0, 1.00f);
+    goto IfEndLabel_52;
+    IfEndLabel_52:
+}
+
+
+// Procedure Index: 26
+void SUB_MoruReturnBag()
+{
+    int var14;
+    int var15;
+    
+    if (!(FLD_CHECK_MORGANA_BAG() == 1))
+    {
+        goto IfEndLabel_53;
+    }
+
+    var14 = FLD_PC_GET_CURRENT_RESHND(0);
+    var15 = MDL_GET_ITEM_RESHND(var14, 2);
+    MDL_ANIM(var15, 52, 0, 5, 1.00f);
+    MDL_ANIM_NEXT(var15, 0, 1, 0, 1.00f);
+    goto IfEndLabel_53;
+    IfEndLabel_53:
+    return;
+}
+

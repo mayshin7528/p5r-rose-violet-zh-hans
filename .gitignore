@@ -1,0 +1,66 @@
+# Temporary builds, reports and backups
+/build/
+/reports/
+/docs/reports/
+/code/
+/dist/
+/outputs/
+*.log
+*.tmp
+*.bak
+*.rar
+*.zip
+april10_fix_resources.txt
+ponytail_recompile_list.txt
+
+# Local runtime state
+**/.Rhistory
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini
+/tools/translation-manager/runtime/
+/translations/backups/
+/translations/build_report.json
+
+# Only the maintained build scripts and translation manager are published
+/scripts/*
+!/scripts/build_translation_patch.js
+!/scripts/deploy_translation_build.js
+!/scripts/mark_deployed_overrides.js
+!/scripts/build_mission_list.py
+!/scripts/build_persona_mapping_patch.js
+!/scripts/prepare_release_tree.js
+!/scripts/audit_untranslated_main.js
+!/scripts/audit_translation_quality.js
+!/scripts/apply_quality_fixes_20260809.js
+!/scripts/report_speaker_fixes_from_diff.js
+!/scripts/preserve_override_order.js
+!/scripts/fix_f42_san_honorifics.js
+!/scripts/generate_third_semester_audit.js
+!/scripts/apply_third_semester_audit_fixes.js
+!/scripts/fix_sumire_battle_status_name.js
+!/scripts/generate_third_semester_audit_workbook.mjs
+!/scripts/audit_story_semantics_v2.js
+/tools/*
+!/tools/build_portable_translation_manager.js
+!/tools/translation-manager/
+!/tools/translation-manager/**
+/tools/translation-manager/runtime/
+
+# Third-party tools and game archives are not part of this repository
+*.dll
+!RoseVioletChineseName.dll
+*.exe
+*.pdb
+*.deps.json
+*.runtimeconfig.json
+*.AWB
+*.ACB
+*.DDS
+*.GMD
+*.GAP
+
+# Local path/config overrides
+.env
+rose.local.json

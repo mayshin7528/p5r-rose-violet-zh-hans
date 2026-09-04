@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rose 汉化管理器</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <h1 id="appTitle">Rose 汉化管理器</h1>
+      <div id="summary" class="summary">正在载入文本库...</div>
+    </div>
+    <section id="reviewerPanel" class="mode-actions reviewer-panel" hidden>
+      <label>
+        <span>审核人</span>
+        <input id="reviewerName" type="text" maxlength="80" placeholder="请输入名字">
+      </label>
+      <button id="importMasterUpdate" class="secondary" type="button">导入主库更新包</button>
+      <input id="importMasterUpdateFile" type="file" accept="application/json,.json" hidden>
+      <button id="exportReview" class="export-button" type="button">保存审核结果</button>
+      <span id="reviewChangeCount" class="mode-hint">尚无改动</span>
+    </section>
+    <section id="mainPanel" class="mode-actions main-panel" hidden>
+      <button id="exportMasterUpdate" class="secondary" type="button">导出主库更新包</button>
+      <button id="importReview" class="primary" type="button">导入便携审核 JSON</button>
+      <input id="importReviewFile" type="file" accept="application/json,.json" hidden>
+      <span class="mode-hint">冲突项会逐条交由你决定</span>
+    </section>
+    <div id="serverState" class="server-state">就绪</div>
+  </header>
+
+  <main>
+    <section class="toolbar" aria-label="筛选工具栏">
+      <label class="search-field">
+        <span>搜索</span>
+        <input id="query" type="search" placeholder="路径、ID、说话人或内容">
+      </label>
+      <label>
+        <span>分类</span>
+        <select id="category"><option value="">全部分类</option></select>
+      </label>
+      <label>
+        <span>状态</span>
+        <select id="status">
+          <option value="unreviewed" selected>未核对</option>
+          <option value="ai_reviewed">AI已核对</option>
+          <option value="high_risk">高危</option>
+          <option value="">全部状态</option>
+        </select>
+      </label>
+      <button id="refresh" class="secondary" type="button">刷新</button>
+      <button id="compileSelected" class="primary" type="button" disabled>编译所选 <span id="selectedCount">0</span></button>
+    </section>
+
+    <section class="table-wrap" aria-label="翻译文本">
+      <table>
+        <thead>
+          <tr>
+            <th class="check"><input id="selectPage" type="checkbox" aria-label="选择本页"></th>
+            <th class="status-col">状态</th>
+            <th class="path-col">资源 / ID</th>
+            <th class="speaker-col">说话人</th>
+            <th class="header-col">Mod Header</th>
+            <th class="text-col english-col">Mod 英文</th>
+            <th class="text-col">最终中文</th>
+            <th class="action-col">操作</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <div id="empty" class="empty" hidden>没有符合条件的文本</div>
+    </section>
+
+    <nav class="pagination" aria-label="分页">
+      <button id="previous" class="secondary" type="button">上一页</button>
+      <span id="pageLabel">第 1 页</span>
+      <button id="next" class="secondary" type="button">下一页</button>
+    </nav>
+  </main>
+
+  <dialog id="editor">
+    <form method="dialog" class="editor-shell">
+      <header class="editor-header">
+        <div>
+          <h2 id="editorId"></h2>
+          <div id="editorPath" class="editor-path"></div>
+        </div>
+        <button class="icon-button" value="cancel" title="关闭" aria-label="关闭">×</button>
+      </header>
+      <div class="editor-meta">
+        <span id="editorStatus"></span>
+        <span id="editorSpeaker"></span>
+      </div>
+      <label class="editor-field header-field">
+        <span>Mod 英文 Header（原样）</span>
+        <input id="editorModHeader" type="text" readonly>
+      </label>
+      <label class="editor-field">
+        <span>Mod 英文</span>
+        <textarea id="editorEnglish" readonly></textarea>
+      </label>
+      <label class="editor-field grow">
+        <span>最终中文（含消息头与控制码）</span>
+        <textarea id="editorTranslation" spellcheck="false"></textarea>
+      </label>
+      <footer class="editor-actions">
+        <button id="toggleReviewed" class="secondary" type="button">标为已核对</button>
+        <button id="saveTranslation" class="primary" type="button">保存译文</button>
+        <button id="compileCurrent" class="danger" type="button">保存并编译</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <dialog id="importDialog">
+    <form method="dialog" class="import-shell">
+      <header class="editor-header">
+        <div>
+          <h2>导入审核结果</h2>
+          <div class="editor-path">无冲突项自动合并，冲突项由你逐条选择</div>
+        </div>
+        <button class="icon-button" value="cancel" title="关闭" aria-label="关闭">×</button>
+      </header>
+      <div id="importSummary" class="import-summary"></div>
+      <div id="conflictList" class="conflict-list"></div>
+      <footer class="editor-actions">
+        <button value="cancel" class="secondary">取消</button>
+        <button id="applyImport" type="button" class="primary">应用导入</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <dialog id="masterUpdateDialog">
+    <form method="dialog" class="import-shell">
+      <header class="editor-header">
+        <div>
+          <h2>导入主库更新包</h2>
+          <div class="editor-path">本地审核记录会保留；双方都改过的句子需要逐条决定</div>
+        </div>
+        <button class="icon-button" value="cancel" title="关闭" aria-label="关闭">×</button>
+      </header>
+      <div id="masterUpdateSummary" class="import-summary"></div>
+      <div id="masterUpdateConflictList" class="conflict-list"></div>
+      <footer class="editor-actions">
+        <button value="cancel" class="secondary">取消</button>
+        <button id="applyMasterUpdate" type="button" class="primary">应用并重启</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" hidden></div>
+  <script src="/app.js"></script>
+</body>
+</html>
